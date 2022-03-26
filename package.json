@@ -5,9 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "jest",
-    "build": "npx webpack --mode production",
-    "start": "webpack serve --mode=development --open",
-    "prepare": "husky install"
+    "build": "npx webpack --mode production"
   },
   "repository": {
     "type": "git",
