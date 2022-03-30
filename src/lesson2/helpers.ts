@@ -1,0 +1,12 @@
+export const isNumber = (item: string): boolean => !isNaN(Number(item));
+
+export const validateSpecNumber = (item: string | number): boolean => {
+  const regExp = new RegExp(
+    /(\d+(\*\*|!))|(\d+\^\d+)|(cos|sin|tan|fib)\(\d+\)/gm
+  );
+
+  return regExp.test(String(item));
+};
+
+export const getSpecOperator = (str: string): string =>
+  str.match(/[!^*]|(cos|sin|tan|fib)/g)?.join("") || "";
