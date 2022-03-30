@@ -11,25 +11,8 @@ export const parser = (line: string): ParsedLineType => {
 
   for (let key = 0; key < stack.length; key++) {
     const prevItem = stack[key - 1];
-    let item = stack[key];
+    const item = stack[key];
 
-    if (/^\(/g.test(item)) {
-      //очищаем от открывающей скобки, чтобы не ломало логику
-      stack[key] = item.replace(/^\(/g, "");
-      //ищем индекс закрывающей скобки
-      const closeBracketIndex = line.indexOf(")", key);
-      //вычисляем результат вычесления в скобках
-      const priorityStack = parser(stack.slice(key, stack.length)?.join(" "));
-      item = String(calculation(priorityStack));
-      //вырезаем выполненное выражение из исходного стэка
-      stack.splice(key, closeBracketIndex);
-    }
-
-    if (/\)$/g.test(item)) {
-      //очищаем от открывающей скобки, чтобы не ломало логику
-      result.push(item.replace(/\)$/g, ""));
-      return result;
-    }
     //Вычисление спец выражений
     if (validateSpecNumber(item) && getSpecOperator(item) in specOperators) {
       //вычисляем особенное выражение
