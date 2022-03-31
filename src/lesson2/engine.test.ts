@@ -1,22 +1,16 @@
 import {firstPrioritiesCalc, secondPrioritiesCalc} from "./engine";
 
-test("firstPrioritiesCalc: [1, * 32]", () => {
-  expect(firstPrioritiesCalc([1, "*", 32])).toEqual([32]);
+test.each([
+  {a: 1, b: "*", c: 32, expected: [32]},
+  {a: 32, b: "/", c: 32, expected: [1]},
+  {a: 32, b: "+", c: 32, expected: [32, "+", 32]}
+])('firstPrioritiesCalc: [$a $b $c]', ({a, b, c, expected}) => {
+  expect(firstPrioritiesCalc([a,b,c])).toStrictEqual(expected);
 });
 
-test("firstPrioritiesCalc: [32, / 32]", () => {
-  expect(firstPrioritiesCalc([32, "/", 32])).toEqual([1]);
+test.each([
+  {a: 32, b: "+", c: 32, expected: 64},
+  {a: 32, b: "-", c: 32, expected: 0}
+])('secondPrioritiesCalc: [$a $b $c]', ({a, b, c, expected}) => {
+  expect(secondPrioritiesCalc([a,b,c])).toBe(expected);
 });
-
-test("firstPrioritiesCalc: [32, + 32]", () => {
-  expect(firstPrioritiesCalc([32, "+", 32])).toEqual([32, "+", 32]);
-});
-
-test("secondPrioritiesCalc: [32, + 32]", () => {
-  expect(secondPrioritiesCalc([32, "+", 32])).toEqual(64);
-});
-
-test("secondPrioritiesCalc: [32, - 32]", () => {
-  expect(secondPrioritiesCalc([32, "-", 32])).toEqual(0);
-});
-

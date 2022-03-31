@@ -1,13 +1,15 @@
 import {cos, factorial, fib, pow, sin, tan} from "./specOperators";
+import {firstPrioritiesCalc} from "./engine";
 
 describe("pow", () => {
-  test("3** to equal 9", () => {
-    expect(pow(3)).toBe(9)
-  })
 
-  test("10** to equal 100", () => {
-    expect(pow(10)).toBe(100)
-  })
+  test.each([
+    {a: 3, expected: 9},
+    {a: 10, expected: 100},
+    {a: 55, expected: 3025}
+  ])('pow: "$a to equal $expected"', ({a, expected}) => {
+    expect(pow(a)).toBe(expected);
+  });
 
   test("5^3 to equal 125", () => {
     expect(pow(5,3)).toBe(125)
