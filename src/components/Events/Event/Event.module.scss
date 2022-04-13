@@ -1,0 +1,30 @@
+.event {
+  color: #fff;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & + .event {
+    margin-left: 10px;
+  }
+}
+
+.img {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.text {
+  margin-top: 5px;
+  font-size: 12px;
+}

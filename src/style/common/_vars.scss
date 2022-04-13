@@ -1,0 +1,10 @@
+//colors
+$yellow: #FDD835;
+$red: #DE3333;
+$background: #131313;
+
+
+@function toRem($size) {
+    $remSize: $size / 12 + rem;
+    @return #{$remSize};
+}
