@@ -50,6 +50,10 @@ module.exports = {
         ],
       },
       { test: /\.ts$/, use: "ts-loader" },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack']
+      },
     ],
   },
   devServer: {

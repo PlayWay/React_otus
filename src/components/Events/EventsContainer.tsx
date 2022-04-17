@@ -3,30 +3,39 @@ import {Events} from "./Events";
 import {EventButton} from "../../types";
 
 const EventsContainer = () => {
-  const links:Array<EventButton> = [
+  const events:Array<EventButton> = [
     {
       name: "Кормление",
       src: "images/child_care.svg",
-      color: "red"
+      color: "red",
+      type: 1
     },
     {
       name: "Сон",
       src: "images/moon-fill.svg",
-      color: "green"
+      color: "green",
+      type: 2
     },
     {
       name: "Прогулка",
       src: "images/child_friendly.svg",
-      color: "blue"
+      color: "blue",
+      type: 3
     },
     {
       name: "Бодроствование",
       src: "images/child_care.svg",
-      color: "orange"
+      color: "orange",
+      type: 4
     }
   ]
 
-  return (<Events links={links}/>)
+  const onEventClick = (type:number): void => {
+    //пока заглушка
+    console.log(type)
+  }
+
+  return (<Events events={events} onEventClick={onEventClick}/>)
 }
 
 export default EventsContainer

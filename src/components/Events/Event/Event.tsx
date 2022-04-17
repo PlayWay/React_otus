@@ -6,10 +6,10 @@ const Event: FC<EventButton> = ({src = '', name = '', color = ''}) => {
 
   return (
     <div className={s.event}>
-      <div style={{backgroundColor: color}} className={s.img}>
-        <img src={src} alt={name}/>
+      <div style={{backgroundColor: color}} className={s.img} data-testid="event-img-wrap">
+        <img src={src} alt={name} data-testid="event-img"/>
       </div>
-      <span className={s.text}>{name}</span>
+      <span className={s.text} data-testid="event-name">{name}</span>
     </div>
   );
 };

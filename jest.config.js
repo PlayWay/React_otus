@@ -4,8 +4,11 @@
 module.exports = {
   clearMocks: true,
   coverageDirectory: "coverage",
-  testEnvironment: "node",
+  testEnvironment: "jsdom",
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest"
   },
+  moduleNameMapper: {
+    '\\.(css|scss)$': 'identity-obj-proxy'
+  }
 };

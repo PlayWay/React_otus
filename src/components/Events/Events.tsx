@@ -4,14 +4,17 @@ import Event from "./Event/Event";
 import {EventButton} from "../../types";
 
 interface Events {
-  links: Array<EventButton>,
+  events: Array<EventButton>,
+  onEventClick:  (type: number) => void
 }
 
-export const Events: FC<Events> = ({links=[]}) => {
+export const Events: FC<Events> = ({events=[],onEventClick = () =>({})}) => {
   return (
-    <ul className={s.events}>
-      {links.map((i,index) => (
-        <Event src={i.src} name={i.name} color={i.color} key={i.name+index}/>
+    <ul className={s.events} >
+      {events.map((i,index) => (
+        <button type="button" onClick={() => onEventClick(i.type)} key={i.name+index}>
+          <Event {...i}/>
+        </button>
       ))}
     </ul>
   )
