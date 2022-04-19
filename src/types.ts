@@ -1,6 +1,6 @@
 export interface EventButton {
-  name: string,
-  src: string,
-  color: string,
-  type: number
+  name: string;
+  src: string;
+  color: string;
+  type?: number;
 }
