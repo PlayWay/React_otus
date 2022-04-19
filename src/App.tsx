@@ -1,7 +1,7 @@
 import React from "react";
-import "./style/main.scss"
-import {Events} from "./components";
+import "./style/main.scss";
+import { Events } from "./components";
 
 export const App = ({}) => {
-  return (<Events/>);
+  return <Events />;
 };
