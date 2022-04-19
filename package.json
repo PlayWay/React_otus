@@ -50,6 +50,7 @@
     "eslint": "^8.13.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.0.0",
@@ -60,8 +61,10 @@
     "husky": "^7.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.5.1",
+    "lint-staged": "^12.3.8",
     "loki": "^0.29.0",
     "mini-css-extract-plugin": "^2.6.0",
+    "prettier": "^2.6.2",
     "sass": "^1.50.0",
     "sass-loader": "^12.6.0",
     "storybook-css-modules-preset": "^1.1.1",
@@ -75,10 +78,7 @@
     "webpack-dev-server": "^4.7.4"
   },
   "hooks": {
-    "pre-commit": [
-      "npm test",
-      "npx eslint --fix"
-    ]
+    "pre-commit": "npm lint"
   },
   "dependencies": {
     "@types/react": "^18.0.1",
@@ -86,5 +86,8 @@
     "clsx": "^1.1.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --cache --fix"
   }
 }
