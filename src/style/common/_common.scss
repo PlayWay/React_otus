@@ -2,7 +2,7 @@
 body {
     font-size: 14px;
     -webkit-font-smoothing: antialiased;
-    font-family: reg;
+    font-family: $font-family;
     -webkit-backface-visibility: hidden;
     -moz-osx-font-smoothing: grayscale;
     min-width: 320px;
@@ -36,20 +36,15 @@ html{
     }
 }
 
-h1,h2,h3 {
-    font-family: boldItalic;
-}
-
 button,.button {
     border: none;
     cursor: pointer;
-    font-family: 'reg';
+    font-family: $font-family;
     background: none;
     padding: 0;
     display: inline-block;
     user-select: none;
 }
-
 
 .container{
     padding: 0 6.25%;
