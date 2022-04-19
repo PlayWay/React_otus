@@ -16,9 +16,3 @@ Normal.args = {
   src: "images/child_care.svg",
   color: "red"
 };
-//
-// export const Disabled = Template.bind({});
-// Disabled.args = {
-//   disabled: true,
-//   children: 'Disabled',
-// };
