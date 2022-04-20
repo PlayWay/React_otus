@@ -13,7 +13,7 @@ export const Events: FC<Events> = ({
   onEventClick = () => ({}),
 }) => {
   return (
-    <ul className={s.events}>
+    <div className={s.events}>
       {events.map((i, index) => (
         <button
           type="button"
@@ -23,6 +23,6 @@ export const Events: FC<Events> = ({
           <Event {...i} />
         </button>
       ))}
-    </ul>
+    </div>
   );
 };
