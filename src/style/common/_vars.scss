@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+$font-family: 'Roboto', sans-serif;
+//colors
+$yellow: #FDD835;
+$red: #DE3333;
+$background: #131313;
+
+$textColor: #fff;
+
+
+@function toRem($size) {
+    $remSize: $size / 12 + rem;
+    @return #{$remSize};
+}
