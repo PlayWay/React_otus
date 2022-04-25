@@ -2,7 +2,7 @@
 // В функцию приходит массив состояний заказа и фильтруется
 // Нужно заменить FIXME на тип который вычисляется на освове OrderState
 
-type FIXME = typeof orderStates[number][];
+type FIXME = Exclude<OrderState, 'producing' | 'buyingSupplies'>[];
 
 const orderStates = [
   "initial",
@@ -23,6 +23,7 @@ export const getUserOrderStates = (orderStates: OrderState[]): FIXME => {
   });
   return filteredStates;
 };
+
 
 
 
