@@ -3,7 +3,7 @@
 // Есть общая функция omit которая удаляет поле из объекта и возвращает его без этого поля
 // Нужно заменить FIXME на соответствующий тип
 
-type FIXME<SourceObject extends Record<string, any>,OmitKey extends keyof SourceObject> = Omit<SourceObject, OmitKey>
+type FIXME<SourceObject extends object,OmitKey extends keyof SourceObject> = Omit<SourceObject, OmitKey>
 
 export const omit = <T extends Record<any, any>, K extends keyof T>(
   obj: T,
