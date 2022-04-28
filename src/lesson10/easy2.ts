@@ -2,9 +2,7 @@
 // Есть объединение (юнион) типов заказов в различных состояниях
 // Нужно заменить FIXME на тип который достанет из Order все возможные состояния (state)
 
-type FIXME = {
-  [p in keyof Order]: Order[p]
-}['state']
+type FIXME = Order['state']
 
 type Order =
   | {
