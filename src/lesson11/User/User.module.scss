@@ -1,0 +1,13 @@
+.list {
+  cursor: default;
+
+  li {
+    transition: 0.3s ease;
+    transition-property: transform, color;
+
+    &:hover {
+      color: green;
+      transform: translate(-3px, 0);
+    }
+  }
+}
