@@ -7,7 +7,7 @@ type UserProps = UsersResponseType;
 class User extends React.PureComponent<UserProps, any> {
   render() {
     return (
-      <div style={{ marginTop: 20 }}>
+      <div style={{ marginTop: 20 }} data-testid="user-info">
         <h3 data-testid="user-name">{this.props.name}</h3>
         <ul className={s.list}>
           <li data-testid="user-phone">Phone: {this.props.phone}</li>

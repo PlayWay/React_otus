@@ -36,7 +36,8 @@ class Mouse extends React.Component<any, MouseState> {
   render() {
     return (
       <span>
-        x: {this.state.x}, y: {this.state.y}
+        x: <b data-testid="mouse-x">{this.state.x}</b> y:{" "}
+        <b data-testid="mouse-y">{this.state.y}</b>
       </span>
     );
   }

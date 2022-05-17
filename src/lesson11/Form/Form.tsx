@@ -9,6 +9,7 @@ type FormState = {
   user: UsersResponseType;
   value: number | null;
   loading: boolean;
+  error: string | null;
 };
 
 class Form extends React.Component<any, FormState> {
@@ -18,6 +19,7 @@ class Form extends React.Component<any, FormState> {
       users: [],
       value: null,
       loading: false,
+      error: null,
       user: {} as UsersResponseType,
     };
     this.getUsers = this.getUsers.bind(this);
@@ -26,7 +28,7 @@ class Form extends React.Component<any, FormState> {
   getUsers() {
     this.setState({ loading: true });
 
-    fetch("https://jsonplaceholder.typicode.com/users")
+    fetch("https://jsonplaceholder.typicode.co2m/users")
       .then(async (response) => {
         if (response.ok) {
           return response.json() as Promise<UsersResponseType[]>;
@@ -35,7 +37,9 @@ class Form extends React.Component<any, FormState> {
         }
       })
       .then((res) => this.setState({ users: res || [] }))
-      .catch((e) => alert(e))
+      .catch((e) => {
+        this.setState({ error: e.toString() });
+      })
       .finally(() => this.setState({ loading: false }));
   }
 
@@ -64,18 +68,24 @@ class Form extends React.Component<any, FormState> {
         <p>
           Двигаем мышку: <Mouse />
         </p>
-        <h1>
+        <h1 data-testid="title">
           {this.state.value
             ? `Пользователь ${this.state.user.username}`
             : "Выберите пользователя"}
         </h1>
-        {this.state.loading && "Загрузка..."}
-        {!this.state.loading && (
+        {this.state.loading && <span data-testid="loading">Загрузка...</span>}
+        {this.state.error && (
+          <h4 style={{ color: "red" }} data-testid="error">
+            {this.state.error}
+          </h4>
+        )}
+        {!this.state.loading && !this.state.error && (
           <>
             <select
               onChange={(e) =>
                 this.setState({ value: +e.currentTarget.value || null })
               }
+              data-testid="select"
             >
               <option value=""></option>
               {this.state.users.map((i, index) => (
