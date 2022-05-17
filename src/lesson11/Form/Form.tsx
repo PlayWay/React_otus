@@ -28,7 +28,7 @@ class Form extends React.Component<any, FormState> {
   getUsers() {
     this.setState({ loading: true });
 
-    fetch("https://jsonplaceholder.typicode.co2m/users")
+    fetch("https://jsonplaceholder.typicode.com/users")
       .then(async (response) => {
         if (response.ok) {
           return response.json() as Promise<UsersResponseType[]>;
