@@ -1,25 +1,33 @@
-# .github/workflows/chromatic.yml
-
 # Workflow name
-name: 'Chromatic'
+name: 'Chromatic Deployment'
 
 # Event for the workflow
 on: push
 
 # List of jobs
 jobs:
-  chromatic-deployment:
+  test:
     # Operating System
     runs-on: ubuntu-latest
     # Job steps
     steps:
       - uses: actions/checkout@v1
-      - name: Install dependencies
-        run: yarn
-        # 👇 Adds Chromatic as a step in the workflow
-      - name: Publish to Chromatic
-        uses: chromaui/action@v1
-        # Chromatic GitHub Action options
+      - run: yarn
+        #👇 Adds Chromatic as a step in the workflow
+      - uses: chromaui/action@v1
+        # Options required for Chromatic's GitHub Action
         with:
-          # 👇 Chromatic projectToken, refer to the manage page to obtain it.
+          #👇 Chromatic projectToken, see https://storybook.js.org/tutorials/intro-to-storybook/react/en/deploy/ to obtain it
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+  chromatic-comment:
+    name: Add chromatic link comment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: mshick/add-pr-comment@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: |
+            You can check this code in chromatic with the link
+            https://www.chromatic.com/builds?appId=${{ secrets.CHROMATIC_PROJECT_ID }}

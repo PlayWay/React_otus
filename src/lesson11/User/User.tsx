@@ -4,7 +4,7 @@ import s from "./User.module.scss";
 
 type UserProps = UsersResponseType;
 
-class User extends React.PureComponent<UserProps, any> {
+class User extends React.PureComponent<UserProps> {
   render() {
     return (
       <div style={{ marginTop: 20 }} data-testid="user-info">
