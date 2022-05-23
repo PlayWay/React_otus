@@ -13,7 +13,8 @@
     "build-storybook": "build-storybook",
     "loki:update": "npm run build-storybook && npx loki update --reactUri file:./storybook-static",
     "loki:approve": "npx loki approve",
-    "loki": "npx loki test"
+    "loki": "npx loki test",
+    "chromatic": "npx chromatic --project-token=43ce87d899aa --force-rebuild"
   },
   "repository": {
     "type": "git",
