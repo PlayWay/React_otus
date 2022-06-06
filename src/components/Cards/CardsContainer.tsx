@@ -7,7 +7,6 @@ export interface CardsContainerProps {
 
 export const CardsContainer: React.FC<CardsContainerProps> = ({ value }) => {
   const [active, setActive] = useState<string[]>([]);
-
   const elementRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState(40);
 

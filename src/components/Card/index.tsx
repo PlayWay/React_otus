@@ -20,9 +20,14 @@ export const Card: React.FC<CardProps> = ({
       className={clsx(s.card, active ? s.active : "")}
       onClick={onClick}
       style={style}
+      data-testid="card"
     >
-      <div className={s.front} />
-      <div className={s.back} style={{ backgroundColor: color }} />
+      <div className={s.front} data-testid="card-front" />
+      <div
+        className={s.back}
+        style={{ backgroundColor: color }}
+        data-testid="card-back"
+      />
     </div>
   );
 };
