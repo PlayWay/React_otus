@@ -1,7 +1,7 @@
 import React from "react";
 import "./style/main.scss";
-import { Events } from "./components";
+import { Main } from "./components/Main";
 
 export const App = ({}) => {
-  return <Events />;
+  return <Main />;
 };
