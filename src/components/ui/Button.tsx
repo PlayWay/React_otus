@@ -6,7 +6,7 @@ import React, {
 import s from "./ui.module.scss";
 import clsx from "clsx";
 
-interface ButtonProps {
+export interface ButtonProps {
   className?: string;
   type?: "button" | "reset" | "submit";
   props?: DetailedHTMLProps<

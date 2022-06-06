@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Cards from "./Cards";
 
-interface CardsContainerProps {
+export interface CardsContainerProps {
   value: number;
 }
 

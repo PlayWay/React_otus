@@ -2,7 +2,7 @@ import React, { CSSProperties } from "react";
 import s from "./Card.module.scss";
 import clsx from "clsx";
 
-interface CardProps {
+export interface CardProps {
   color: string;
   active?: boolean;
   onClick?: () => void;
