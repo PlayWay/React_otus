@@ -11,17 +11,29 @@ interface FormProps {
 
 export const Form: React.FC<FormProps> = ({ onSumbit, value, onChange }) => {
   return (
-    <form onSubmit={onSumbit}>
+    <form onSubmit={onSumbit} data-testid="form">
       <div className={s.wrap}>
-        <input value={value} className={s.input} name="x" onChange={onChange} />
+        <input
+          value={value}
+          className={s.input}
+          name="x"
+          onChange={onChange}
+          data-testid="input-x"
+        />
         <span className={s.x}>X</span>
-        <input value={value} className={s.input} name="y" onChange={onChange} />
+        <input
+          value={value}
+          className={s.input}
+          name="y"
+          onChange={onChange}
+          data-testid="input-y"
+        />
       </div>
       <div className={s.btnWrap}>
-        <Button type="submit" className={s.button}>
+        <Button type="submit" className={s.button} data-testid="play-btn">
           Начать игру
         </Button>
-        <div className={s.searchColor}>
+        <div className={s.searchColor} data-testid="color-box">
           <h2>Цвет:</h2>
           <Card color={"red"} />
         </div>
