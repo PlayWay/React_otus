@@ -1,7 +1,6 @@
 import React from "react";
-import "./style/main.scss";
-import { Events } from "./components";
+import Form from "./lesson11/Form/Form";
 
 export const App = ({}) => {
-  return <Events />;
+  return <Form />;
 };
