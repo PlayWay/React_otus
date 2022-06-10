@@ -1,6 +1,7 @@
 import React from "react";
-import Form from "./lesson11/Form/Form";
+import "./style/main.scss";
+import { Main } from "./components/Main";
 
 export const App = ({}) => {
-  return <Form />;
+  return <Main />;
 };

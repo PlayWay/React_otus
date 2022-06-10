@@ -1,83 +1,82 @@
 
 body {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  font-family: $font-family;
+  -webkit-backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  min-width: 320px;
+}
+
+html {
+  @media(min-width: 1200px) {
+    font-size: 12px;
+  }
+  @media(min-width: 1300px) {
+    font-size: 13px;
+  }
+  @media(min-width: 1400px) {
     font-size: 14px;
-    -webkit-font-smoothing: antialiased;
-    font-family: $font-family;
-    -webkit-backface-visibility: hidden;
-    -moz-osx-font-smoothing: grayscale;
-    min-width: 320px;
-    color: #fff;
-    background-color: $background;
-}
-html{
-    @media(min-width: 1200px){
-        font-size: 12px;
-    }
-    @media(min-width: 1300px){
-        font-size: 13px;
-    }
-    @media(min-width: 1400px){
-        font-size: 14px;
-    }
-    @media(min-width: 1500px){
-        font-size: 15px;
-    }
-    @media(min-width: 1600px){
-        font-size: 16px;
-    }
-    @media(min-width: 1700px){
-        font-size: 17px;
-    }
-    @media(min-width: 1800px){
-        font-size: 18px;
-    }
-    @media(min-width: 1920px){
-        font-size: 19.2px;
-    }
+  }
+  @media(min-width: 1500px) {
+    font-size: 15px;
+  }
+  @media(min-width: 1600px) {
+    font-size: 16px;
+  }
+  @media(min-width: 1700px) {
+    font-size: 17px;
+  }
+  @media(min-width: 1800px) {
+    font-size: 18px;
+  }
+  @media(min-width: 1920px) {
+    font-size: 19.2px;
+  }
 }
 
-button,.button {
-    border: none;
-    cursor: pointer;
-    font-family: $font-family;
-    background: none;
+button, .button {
+  border: none;
+  cursor: pointer;
+  font-family: $font-family;
+  background: none;
+  padding: 0;
+  display: inline-block;
+  user-select: none;
+}
+
+.container {
+  padding: 0 6.25%;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 auto;
+
+  @media (min-width: 768px) {
+    padding: 0 2.604167%;
+  }
+  @media (min-width: 1200px) {
+    padding: 0 1.6666667%;
+  }
+
+  @media (min-width: 1800px) {
+    max-width: 1800px;
+
+  }
+  @media (min-width: 1840px) {
     padding: 0;
-    display: inline-block;
-    user-select: none;
-}
-
-.container{
-    padding: 0 6.25%;
-    box-sizing: border-box;
-    width: 100%;
-    margin: 0 auto;
-
-    @media (min-width: 768px) {
-        padding: 0 2.604167%;
-    }
-    @media (min-width: 1200px) {
-        padding: 0 1.6666667%;
-    }
-
-    @media (min-width: 1800px) {
-        max-width: 1800px;
-
-    }
-    @media (min-width: 1840px) {
-        padding: 0;
-    }
+  }
 }
 
 *:focus {
-    outline: none;
+  outline: none;
 }
 
 .text {
-    &>*+* {
-        margin-top: 15px;
-    }
+  & > * + * {
+    margin-top: 15px;
+  }
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
