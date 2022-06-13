@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 import s from "./Cards.module.scss";
 import Card from "../Card";
-import Button from "../ui/Button";
+import Button from "../../ui/Button";
 import clsx from "clsx";
-import { GameInfo, Status } from "../../types";
+import { GameInfo, Status } from "../../../types";
 
 interface CardsProps {
   onChooseCard: (key: string) => void;
@@ -14,6 +14,7 @@ interface CardsProps {
   openAll: boolean;
   status: Status;
   active: string[];
+  nextLevel: () => void;
 }
 
 export const Cards: React.FC<CardsProps> = ({
@@ -21,6 +22,7 @@ export const Cards: React.FC<CardsProps> = ({
   active = [],
   replay,
   message,
+  nextLevel,
   status,
   openAll = false,
   size,
@@ -42,6 +44,9 @@ export const Cards: React.FC<CardsProps> = ({
         <Button onClick={replay} data-testid="end-game-btn">
           Сыграть снова
         </Button>
+        {message.toLowerCase().indexOf("выиграли") > -1 && (
+          <Button onClick={nextLevel}>Следующий уровень</Button>
+        )}
       </div>
       {filledArray.map((row) => {
         return row.map((col) => (
@@ -61,4 +66,4 @@ export const Cards: React.FC<CardsProps> = ({
   );
 };
 
-export default Cards;
+export default memo(Cards);

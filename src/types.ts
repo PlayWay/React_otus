@@ -1,3 +1,5 @@
+import { Location } from "react-router-dom";
+
 export type Colors = "orange" | "red" | "blue" | "green" | "black" | "violet";
 
 export type GridItem = { id: string; color: Colors; value: number };
@@ -8,3 +10,7 @@ export type GameInfo = {
 };
 
 export type Status = "start" | "reset" | "end" | "process" | "replay";
+
+export type NavigationState = {
+  from?: Location;
+};

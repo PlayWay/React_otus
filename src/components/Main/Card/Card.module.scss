@@ -1,3 +1,5 @@
+@import "../../../style/vars";
+
 .card {
   width: 40px;
   height: 40px;
@@ -30,7 +32,7 @@
 }
 
 .front {
-  background-color: lightseagreen;
+  background-color: $primary-1;
 }
 
 .back {

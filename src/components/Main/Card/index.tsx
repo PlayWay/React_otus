@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, memo } from "react";
 import s from "./Card.module.scss";
 import clsx from "clsx";
 
@@ -32,4 +32,4 @@ export const Card: React.FC<CardProps> = ({
   );
 };
 
-export default Card;
+export default memo(Card);

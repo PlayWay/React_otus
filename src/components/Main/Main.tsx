@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import { Form } from "../index";
 import s from "./Main.module.scss";
-import { Cards } from "../Cards";
+import { Cards } from "./Cards";
 
 interface MainProps {
   value: number;
@@ -20,4 +20,4 @@ export const Main: React.FC<MainProps> = ({ value }) => {
   );
 };
 
-export default Main;
+export default memo(Main);

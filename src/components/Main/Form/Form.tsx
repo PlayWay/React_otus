@@ -1,7 +1,9 @@
-import React, { ChangeEvent } from "react";
-import Button from "../ui/Button";
+import React, { ChangeEvent, memo } from "react";
+import Button from "../../ui/Button";
 import s from "./Form.module.scss";
-import { GameInfo } from "../../types";
+import ui from "../../ui/ui.module.scss";
+import { GameInfo } from "../../../types";
+import clsx from "clsx";
 
 interface FormProps {
   onSumbit: (e: ChangeEvent<HTMLFormElement>) => void;
@@ -23,7 +25,7 @@ export const Form: React.FC<FormProps> = ({
       <div className={s.wrap}>
         <input
           value={value}
-          className={s.input}
+          className={clsx(s.input, ui.input)}
           name="x"
           onChange={onChange}
           data-testid="input-x"
@@ -31,7 +33,7 @@ export const Form: React.FC<FormProps> = ({
         <span className={s.x}>X</span>
         <input
           value={value}
-          className={s.input}
+          className={clsx(s.input, ui.input)}
           name="y"
           onChange={onChange}
           data-testid="input-y"
@@ -58,4 +60,4 @@ export const Form: React.FC<FormProps> = ({
   );
 };
 
-export default Form;
+export default memo(Form);

@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { mockCards } from "../../mocks/cards";
+import { mockCards } from "../../../mocks/cards";
 import Cards from "./Cards";
 
 const renderCards = ({

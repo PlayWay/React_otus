@@ -2,8 +2,8 @@ import "@testing-library/jest-dom";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { mockCards } from "../../mocks/cards";
-import { GameContext } from "../Main/MainContainer";
+import { mockCards } from "../../../mocks/cards";
+import { GameContext } from "../MainContainer";
 import CardsContainer from "./CardsContainer";
 
 const renderContainer = ({

@@ -1,4 +1,5 @@
 import React, {
+  memo,
   useCallback,
   useContext,
   useEffect,
@@ -6,8 +7,8 @@ import React, {
   useState,
 } from "react";
 import Cards from "./Cards";
-import { GameContext } from "../Main/MainContainer";
-import { VIEW_TIMEOUT } from "../../helpers/const";
+import { AreaSizeContext, GameContext } from "../MainContainer";
+import { VIEW_TIMEOUT } from "../../../helpers/const";
 import s from "./Cards.module.scss";
 
 export interface CardsContainerProps {
@@ -16,6 +17,7 @@ export interface CardsContainerProps {
 
 export const CardsContainer: React.FC<CardsContainerProps> = ({ value }) => {
   const { gameInfo, status, control } = useContext(GameContext);
+  const { setSize: setAreaSize } = useContext(AreaSizeContext);
   const [active, setActive] = useState<string[]>([]);
   const [openAll, setOpenAll] = useState(false);
   const [msg, setMsg] = useState("");
@@ -80,6 +82,10 @@ export const CardsContainer: React.FC<CardsContainerProps> = ({ value }) => {
     [active, status]
   );
 
+  const nextLevel = useCallback(() => {
+    setAreaSize((prev: number) => ++prev);
+  }, [setAreaSize]);
+
   return (
     <div className={s.playArea} ref={elementRef}>
       <Cards
@@ -91,9 +97,10 @@ export const CardsContainer: React.FC<CardsContainerProps> = ({ value }) => {
         filledArray={gameInfo.filledArray}
         onChooseCard={onChooseCard}
         size={size}
+        nextLevel={nextLevel}
       />
     </div>
   );
 };
 
-export default CardsContainer;
+export default memo(CardsContainer);

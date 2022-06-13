@@ -2,8 +2,8 @@ import React from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 import { Cards } from "./index";
 import { CardsContainerProps } from "./CardsContainer";
-import { GameContext } from "../Main/MainContainer";
-import { mockCards } from "../../mocks/cards";
+import { GameContext } from "../MainContainer";
+import { mockCards } from "../../../mocks/cards";
 
 export default {
   title: "Cards",

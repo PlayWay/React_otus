@@ -1,6 +1,9 @@
+@import "./src/style/vars";
+
 .container {
   box-sizing: border-box;
   padding: 0 10px;
+  color: $primary-color;
 }
 
 .title {

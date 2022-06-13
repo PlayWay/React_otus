@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { GameContext } from "../Main/MainContainer";
+import { GameContext } from "../MainContainer";
 import { FormContainer } from "./FormContainer";
 
 const renderContainer = ({
@@ -51,8 +51,9 @@ describe("FormContainer", () => {
   it("input validate", async () => {
     renderContainer({});
     const inputX = screen.getByTestId("input-x");
-    await userEvent.type(inputX, "11");
-    expect(inputX.value).toBe("3");
+    await userEvent.clear(inputX);
+    await userEvent.type(inputX, "13");
+    expect(inputX.value).toBe("1");
     await userEvent.clear(inputX);
     await userEvent.type(inputX, "7");
     expect(inputX.value).toBe("7");
