@@ -7,9 +7,19 @@ import Form from "./Form";
 const renderForm = ({
   onSumbit = (e) => ({}),
   value = 3,
+  disabled = false,
+  color = "green",
   onChange = (e) => ({}),
 }) => {
-  render(<Form value={value} onSumbit={onSumbit} onChange={onChange} />);
+  render(
+    <Form
+      value={value}
+      onSumbit={onSumbit}
+      onChange={onChange}
+      color={color}
+      disabled={disabled}
+    />
+  );
 };
 
 describe("Form", () => {
@@ -39,5 +49,11 @@ describe("Form", () => {
     expect(onChange).toHaveBeenCalled();
     await userEvent.type(screen.getByTestId("input-y"), "2222");
     expect(onChange).toHaveBeenCalled();
+  });
+  it("check color box", async () => {
+    renderForm({ color: "blue" });
+    expect(
+      screen.getByTestId("color-box-container").style.backgroundColor
+    ).toBe("blue");
   });
 });

@@ -6,10 +6,11 @@ import React, {
   useState,
 } from "react";
 import Form from "./Form";
-import { SetSizeContext } from "../Main/MainContainer";
+import { GameContext, SetSizeContext } from "../Main/MainContainer";
 
 export const FormContainer: React.FC = ({}) => {
   const setSize = useContext(SetSizeContext);
+  const { gameInfo, status } = useContext(GameContext);
   const [value, setValue] = useState<number>(3);
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -21,15 +22,24 @@ export const FormContainer: React.FC = ({}) => {
     }
     setValue(numVal || 0);
   }, []);
+
   const onSubmit = useCallback(
-    (e: ChangeEvent<HTMLFormElement>) => {
+    async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
       setSize(value);
     },
     [value]
   );
 
-  return <Form onSumbit={onSubmit} value={value} onChange={onChange} />;
+  return (
+    <Form
+      onSumbit={onSubmit}
+      value={value}
+      onChange={onChange}
+      disabled={status === "start"}
+      color={gameInfo.searchColor}
+    />
+  );
 };
 
 export default memo(FormContainer);

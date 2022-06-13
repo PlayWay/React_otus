@@ -1,48 +1,62 @@
-import React, { RefObject } from "react";
-import s from "../Main/Main.module.scss";
+import React from "react";
+import s from "./Cards.module.scss";
 import Card from "../Card";
+import Button from "../ui/Button";
+import clsx from "clsx";
+import { GameInfo, Status } from "../../types";
 
 interface CardsProps {
   onChooseCard: (key: string) => void;
-  value: number;
+  replay: () => void;
+  filledArray: GameInfo["filledArray"];
   size: number;
+  message: string;
+  openAll: boolean;
+  status: Status;
   active: string[];
-  elementRef: RefObject<HTMLDivElement>;
 }
 
 export const Cards: React.FC<CardsProps> = ({
-  value,
-  elementRef,
+  filledArray = [],
   active = [],
+  replay,
+  message,
+  status,
+  openAll = false,
   size,
   onChooseCard,
 }) => {
   return (
-    <div className={s.playArea} ref={elementRef}>
+    <div
+      className={s.cards}
+      data-testid="cards"
+      style={{
+        gridTemplateColumns: `repeat(${filledArray.length},${size}px)`,
+      }}
+    >
       <div
-        className={s.cards}
-        style={{
-          gridTemplateColumns: `repeat(${value},${size}px)`,
-        }}
+        className={clsx(s.endGame, status === "end" ? s.active : "")}
+        data-testid="end-game-wrap"
       >
-        {Array.from({ length: value }).map((_, rowIndex) => {
-          return Array.from({ length: value }).map((_, i) => {
-            const key = `${rowIndex}${i}`;
-            return (
-              <Card
-                key={key}
-                style={{
-                  width: size,
-                  height: size,
-                }}
-                color={"red"}
-                active={active.includes(key)}
-                onClick={() => onChooseCard(key)}
-              />
-            );
-          });
-        })}
+        <h2 data-testid="end-game-message">{message}</h2>
+        <Button onClick={replay} data-testid="end-game-btn">
+          Сыграть снова
+        </Button>
       </div>
+      {filledArray.map((row) => {
+        return row.map((col) => (
+          <Card
+            key={col.id}
+            style={{
+              width: size,
+              height: size,
+            }}
+            color={col.color}
+            active={openAll || active.includes(col.id)}
+            onClick={() => onChooseCard(col.id)}
+          />
+        ));
+      })}
     </div>
   );
 };

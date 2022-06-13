@@ -5,6 +5,13 @@
   color: #fff;
   border: 1px solid #000;
   border-radius: 5px;
+
+  &:disabled {
+    background-color: #ffffff;
+    color: grey;
+    border-color: grey;
+    pointer-events: none;
+  }
 }
 
 @media (min-width: 768px) {

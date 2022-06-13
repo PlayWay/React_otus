@@ -1,24 +1,66 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Cards from "./Cards";
+import { GameContext } from "../Main/MainContainer";
+import { VIEW_TIMEOUT } from "../../helpers/const";
+import s from "./Cards.module.scss";
 
 export interface CardsContainerProps {
   value: number;
 }
 
 export const CardsContainer: React.FC<CardsContainerProps> = ({ value }) => {
+  const { gameInfo, status, control } = useContext(GameContext);
   const [active, setActive] = useState<string[]>([]);
-  const elementRef = useRef<HTMLDivElement>(null);
+  const [openAll, setOpenAll] = useState(false);
+  const [msg, setMsg] = useState("");
   const [size, setSize] = useState(40);
+  const elementRef = useRef<HTMLDivElement>(null);
 
-  const onChooseCard = useCallback(
-    (key: string) => {
-      if (active.includes(key)) {
-        return;
+  useEffect(() => {
+    switch (status) {
+      case "start":
+        setOpenAll(true);
+        setActive([]);
+        setTimeout(() => {
+          setOpenAll(false);
+          control.process();
+        }, VIEW_TIMEOUT * value);
+        break;
+      case "replay":
+        setActive([]);
+        setOpenAll(false);
+        break;
+      case "reset":
+        setActive([]);
+        setOpenAll(false);
+        break;
+      case "end":
+        setOpenAll(true);
+        setActive([]);
+        break;
+    }
+  }, [control, status, value]);
+
+  useEffect(() => {
+    if (
+      active.length &&
+      gameInfo.winSeries.length &&
+      active.length === gameInfo.winSeries.length
+    ) {
+      if (gameInfo.winSeries.every((v) => active.some((i) => i === v))) {
+        setMsg("Поздравляем! Вы выиграли!");
+      } else {
+        setMsg("Проиграли :( Попробуйте, снова!");
       }
-      setActive((prev) => [...prev, key]);
-    },
-    [active]
-  );
+      control.endGame();
+    }
+  }, [active, control.endGame, gameInfo.winSeries]);
 
   useEffect(() => {
     setSize(
@@ -28,14 +70,29 @@ export const CardsContainer: React.FC<CardsContainerProps> = ({ value }) => {
     );
   }, [value]);
 
+  const onChooseCard = useCallback(
+    (key: string) => {
+      if (active.includes(key) || status === "start") {
+        return;
+      }
+      setActive((prev) => [...prev, key]);
+    },
+    [active, status]
+  );
+
   return (
-    <Cards
-      active={active}
-      value={value}
-      onChooseCard={onChooseCard}
-      elementRef={elementRef}
-      size={size}
-    />
+    <div className={s.playArea} ref={elementRef}>
+      <Cards
+        openAll={openAll}
+        replay={control.replay}
+        active={active}
+        message={msg}
+        status={status}
+        filledArray={gameInfo.filledArray}
+        onChooseCard={onChooseCard}
+        size={size}
+      />
+    </div>
   );
 };
 

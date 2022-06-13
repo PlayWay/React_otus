@@ -6,23 +6,26 @@ import React, {
 import s from "./ui.module.scss";
 import clsx from "clsx";
 
-export interface ButtonProps {
+export type ButtonProps = {
   className?: string;
+  disabled?: boolean;
   type?: "button" | "reset" | "submit";
-  props?: DetailedHTMLProps<
-    HTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  >;
-}
+} & DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 
 export const Button: React.FC<PropsWithChildren<ButtonProps>> = ({
   type = "button",
+  disabled = false,
   className,
   children,
   ...props
 }) => {
   return (
-    <button type={type} className={clsx(s.button, className)} {...props}>
+    <button
+      disabled={disabled}
+      type={type}
+      className={clsx(s.button, className)}
+      {...props}
+    >
       {children}
     </button>
   );

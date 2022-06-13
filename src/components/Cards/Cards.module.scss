@@ -1,0 +1,46 @@
+.cards {
+  display: grid;
+  grid-gap: 5px;
+  position: relative;
+}
+
+.color {
+  width: 30%;
+  height: 30%;
+}
+
+.endGame {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background-color: rgba(#000, 0.4);
+  box-shadow: 0 0 15px 7px rgb(0 0 0 / 30%);
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  transition: opacity .3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  h2 {
+    color: #fff;
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.playArea {
+  display: flex;
+  justify-content: center;
+}

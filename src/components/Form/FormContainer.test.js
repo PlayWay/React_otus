@@ -2,7 +2,25 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
+import { GameContext } from "../Main/MainContainer";
 import { FormContainer } from "./FormContainer";
+
+const renderContainer = ({
+  status = "start",
+  gameInfo = { searchColor: "red", filledArray: [], winSeries: [] },
+}) => {
+  render(
+    <GameContext.Provider
+      value={{
+        status,
+        gameInfo,
+        control: {},
+      }}
+    >
+      <FormContainer />
+    </GameContext.Provider>
+  );
+};
 
 describe("FormContainer", () => {
   afterEach(() => {
@@ -13,7 +31,7 @@ describe("FormContainer", () => {
   });
 
   it("entry inputX", async () => {
-    render(<FormContainer />);
+    renderContainer({});
     const inputX = screen.getByTestId("input-x");
     const inputY = screen.getByTestId("input-y");
     await userEvent.clear(inputX);
@@ -22,7 +40,7 @@ describe("FormContainer", () => {
     expect(inputY.value).toBe("5");
   });
   it("entry inputY", async () => {
-    render(<FormContainer />);
+    renderContainer({});
     const inputX = screen.getByTestId("input-x");
     const inputY = screen.getByTestId("input-y");
     await userEvent.clear(inputY);
@@ -31,7 +49,7 @@ describe("FormContainer", () => {
     expect(inputY.value).toBe("10");
   });
   it("input validate", async () => {
-    render(<FormContainer />);
+    renderContainer({});
     const inputX = screen.getByTestId("input-x");
     await userEvent.type(inputX, "11");
     expect(inputX.value).toBe("3");
@@ -43,4 +61,15 @@ describe("FormContainer", () => {
     await userEvent.type(inputX, "!@$@$");
     expect(inputX.value).toBe("7");
   });
+  it("check disabled play button if status 'start'", () => {
+    renderContainer({ status: "start" });
+    expect(screen.getByTestId("play-btn")).toBeDisabled();
+  });
+  test.each(["end", "replay", "process", "reset"])(
+    "check enabled play button if status '%s'",
+    (status) => {
+      renderContainer({ status });
+      expect(screen.getByTestId("play-btn")).not.toBeDisabled();
+    }
+  );
 });

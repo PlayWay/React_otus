@@ -1,15 +1,23 @@
 import React, { ChangeEvent } from "react";
 import Button from "../ui/Button";
 import s from "./Form.module.scss";
-import Card from "../Card";
+import { GameInfo } from "../../types";
 
 interface FormProps {
   onSumbit: (e: ChangeEvent<HTMLFormElement>) => void;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   value: number;
+  disabled: boolean;
+  color: GameInfo["searchColor"];
 }
 
-export const Form: React.FC<FormProps> = ({ onSumbit, value, onChange }) => {
+export const Form: React.FC<FormProps> = ({
+  onSumbit,
+  value,
+  disabled,
+  onChange,
+  color,
+}) => {
   return (
     <form onSubmit={onSumbit} data-testid="form">
       <div className={s.wrap}>
@@ -30,12 +38,20 @@ export const Form: React.FC<FormProps> = ({ onSumbit, value, onChange }) => {
         />
       </div>
       <div className={s.btnWrap}>
-        <Button type="submit" className={s.button} data-testid="play-btn">
+        <Button
+          type="submit"
+          disabled={disabled}
+          className={s.button}
+          data-testid="play-btn"
+        >
           Начать игру
         </Button>
         <div className={s.searchColor} data-testid="color-box">
           <h2>Цвет:</h2>
-          <Card color={"red"} />
+          <div
+            data-testid="color-box-container"
+            style={{ backgroundColor: color, width: 40, height: 40 }}
+          />
         </div>
       </div>
     </form>
