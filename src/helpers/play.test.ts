@@ -16,18 +16,18 @@ describe("play func", () => {
   it("check return prop filledArray scheme", () => {
     jest.spyOn(global.Math, "random").mockReturnValue(0.123456789);
     const funcReturn = play(3);
-    expect(funcReturn.filledArray.length).toBe(3);
-    expect(funcReturn.filledArray[0].length).toBe(3);
+    expect(funcReturn.filledArray).toHaveLength(3);
+    expect(funcReturn.filledArray[0]).toHaveLength(3);
     expect(funcReturn.filledArray[0][2].color).toBe("orange");
     expect(funcReturn.filledArray[0][2].id).toBe("02");
     const funcReturn2 = play(5);
-    expect(funcReturn2.filledArray.length).toBe(5);
-    expect(funcReturn2.filledArray[3].length).toBe(5);
+    expect(funcReturn2.filledArray).toHaveLength(5);
+    expect(funcReturn2.filledArray[3]).toHaveLength(5);
   });
   it('check return prop "searchColor", "winSeries"', () => {
     jest.spyOn(global.Math, "random").mockReturnValue(0.123456789);
     const funcReturn = play(2);
-    expect(funcReturn.winSeries.length).toBe(4);
+    expect(funcReturn.winSeries).toHaveLength(4);
     expect(funcReturn.winSeries.join(";")).toBe(
       ["00", "01", "10", "11"].join(";")
     );

@@ -49,7 +49,7 @@ describe("Cards", () => {
     expect(getByTestId("end-game-message")).toBeInTheDocument();
     expect(getByTestId("end-game-btn")).toBeInTheDocument();
     expect(getByTestId("cards")).toBeInTheDocument();
-    expect(cards.length).toBe(9);
+    expect(cards).toHaveLength(9);
     cards.forEach((card) => {
       expect(card.className.split(" ").includes("active")).toBe(false);
     });
@@ -78,7 +78,7 @@ describe("Cards", () => {
     it("should open all cards if send prop 'openAll'", () => {
       renderCards({ openAll: true });
       const cards = getAllByTestId("card");
-      expect(cards.length).toBe(9);
+      expect(cards).toHaveLength(9);
       cards.forEach((card) => {
         expect(card.className.split(" ").includes("active")).toBe(true);
       });
