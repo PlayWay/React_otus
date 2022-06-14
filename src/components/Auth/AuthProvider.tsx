@@ -16,7 +16,7 @@ export type AuthProviderType = {
 export const AuthProviderContext = createContext<AuthProviderType>(
   {} as AuthProviderType
 );
-export const AuthProvider: React.FC<PropsWithChildren<any>> = ({
+export const AuthProvider: React.FC<PropsWithChildren<unknown>> = ({
   children,
 }) => {
   const [user, setUser] = useState<string>(localStorage.getItem("user") || "");
