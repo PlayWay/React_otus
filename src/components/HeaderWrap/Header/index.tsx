@@ -8,8 +8,12 @@ export const Header: React.FC = ({}) => {
   return (
     <nav className={s.nav}>
       <b>Think-Game</b>
-      <h1 className={s.name}>{user}</h1>
-      <Button onClick={logout}>Выйти</Button>
+      <h1 className={s.name} data-testid="header-user">
+        {user}
+      </h1>
+      <Button onClick={logout} data-testid="header-logout">
+        Выйти
+      </Button>
     </nav>
   );
 };

@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import { usePlayFunc } from "./usePlayFunc";
 import { GameInfo, Status } from "../types";
+import { play } from "../helpers/play";
 
 export type GameHookType = {
   control: {
@@ -17,7 +17,6 @@ export type GameHookType = {
 export const useGame = (size = 3) => {
   const [gameInfo, setGameInfo] = useState<GameInfo>({} as GameInfo);
   const [status, setStatus] = useState<Status>("" as Status);
-  const play = usePlayFunc();
 
   const reset = useCallback(() => {
     setGameInfo({
@@ -31,7 +30,7 @@ export const useGame = (size = 3) => {
     const game = play(size);
     setGameInfo(game);
     setStatus("start");
-  }, [play, size]);
+  }, [size]);
 
   const endGame = useCallback(() => {
     setStatus("end");

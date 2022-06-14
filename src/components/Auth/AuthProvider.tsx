@@ -6,8 +6,9 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { LOCAL_STORAGE_KEYS } from "../../helpers/const";
 
-type AuthProviderType = {
+export type AuthProviderType = {
   user: string;
   login: (name: string) => void;
   logout: () => void;
@@ -22,9 +23,9 @@ export const AuthProvider: React.FC<PropsWithChildren<any>> = ({
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem("user", user);
+      localStorage.setItem(LOCAL_STORAGE_KEYS.user, user);
     } else {
-      localStorage.removeItem("user");
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.user);
     }
   }, [user]);
 
