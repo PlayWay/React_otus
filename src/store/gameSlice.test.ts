@@ -1,10 +1,12 @@
 import gameReducer, {
   addActiveCard,
-  clearActiveCards,
+  endGame,
   GameState,
-  setGameInfo,
+  process,
+  replay,
   setOpenAll,
-  setStatus,
+  setSize,
+  start,
 } from "./gameSlice";
 import { GameInfo } from "../types";
 
@@ -15,72 +17,59 @@ const initState = ({
   gameInfo = {} as GameInfo,
   openAll = false,
   status = "reset",
+  size = 0,
 }: InitState) =>
   ({
     active,
     gameInfo,
     openAll,
     status,
+    size,
   } as InitState);
 
 describe("gameReducer", () => {
-  it("should set gameInfo", () => {
-    expect(
-      gameReducer(
-        initState({} as InitState),
-        setGameInfo({ searchColor: "red", filledArray: [], winSeries: [] })
-      )
-    ).toEqual({
-      active: [],
-      gameInfo: { searchColor: "red", filledArray: [], winSeries: [] },
-      openAll: false,
-      status: "reset",
-    });
-  });
   it("should push activeCard on array active", () => {
-    expect(
-      gameReducer(initState({} as InitState), addActiveCard("00"))
-    ).toEqual({
-      active: ["00"],
-      gameInfo: {},
-      openAll: false,
-      status: "reset",
-    });
-  });
-  it("should clear active cards", () => {
-    expect(
-      gameReducer(
-        initState({ active: ["00", "11"] } as InitState),
-        clearActiveCards()
-      )
-    ).toEqual({
-      active: [],
-      gameInfo: {},
-      openAll: false,
-      status: "reset",
-    });
+    const state = gameReducer(initState({} as InitState), addActiveCard("00"));
+    expect(state.active).toEqual(["00"]);
   });
   it("should set openAll", () => {
-    expect(
-      gameReducer(initState({ openAll: false } as InitState), setOpenAll(true))
-    ).toEqual({
-      active: [],
-      gameInfo: {},
-      openAll: true,
-      status: "reset",
-    });
+    const state = gameReducer(
+      initState({ openAll: false } as InitState),
+      setOpenAll(true)
+    );
+    expect(state.openAll).toEqual(true);
   });
-  it("should set status", () => {
-    expect(
-      gameReducer(
-        initState({ status: "reset" } as InitState),
-        setStatus("start")
-      )
-    ).toEqual({
-      active: [],
-      gameInfo: {},
-      openAll: false,
-      status: "start",
-    });
+  it("should set process", () => {
+    const state = gameReducer(
+      initState({ status: "reset" } as InitState),
+      process()
+    );
+    expect(state.status).toEqual("process");
+  });
+  it("should clear active,openAll cards, set status 'start' and filled gameInfo if start game", () => {
+    jest.spyOn(global.Math, "random").mockReturnValue(0.123456789);
+    const state = gameReducer(initState({ size: 3 } as InitState), start());
+    expect(state.active).toEqual([]);
+    expect(state.openAll).toBe(true);
+    expect(state.status).toBe("start");
+    expect(state.gameInfo.filledArray).toHaveLength(3);
+    expect(state.gameInfo.searchColor).toBe("orange");
+    expect(state.gameInfo.winSeries).toHaveLength(9);
+  });
+  it("should set size", () => {
+    const state = gameReducer(initState({} as InitState), setSize(3));
+    expect(state.size).toBe(3);
+  });
+  it("should clear active,openAll cards,status 'replay' if replay", () => {
+    const state = gameReducer(initState({} as InitState), replay());
+    expect(state.active).toEqual([]);
+    expect(state.openAll).toBe(false);
+    expect(state.status).toBe("replay");
+  });
+  it("should clear active,openAll cards,status 'end' if endGame", () => {
+    const state = gameReducer(initState({} as InitState), endGame());
+    expect(state.active).toEqual([]);
+    expect(state.openAll).toBe(true);
+    expect(state.status).toBe("end");
   });
 });
