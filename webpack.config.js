@@ -1,13 +1,13 @@
 const path = require("path");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: "./src/index.tsx",
   devtool: "source-map",
   resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx", ".json"]
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
   },
   output: {
     path: path.join(__dirname, "/dist"),
@@ -24,7 +24,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
           },
         ],
       },
@@ -44,19 +44,20 @@ module.exports = {
           {
             loader: "sass-loader",
             options: {
-              sourceMap: true
-            }
+              sourceMap: true,
+            },
           },
         ],
       },
       { test: /\.ts$/, use: "ts-loader" },
       {
         test: /\.svg$/,
-        use: ['@svgr/webpack']
+        use: ["@svgr/webpack"],
       },
     ],
   },
   devServer: {
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({

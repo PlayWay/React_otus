@@ -15,3 +15,8 @@ export const Normal = Template.bind({});
 Normal.args = {
   children: "Начать игру",
 };
+export const Disabled = Template.bind({});
+Disabled.args = {
+  children: "Начать игру",
+  disabled: true,
+};

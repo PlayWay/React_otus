@@ -1,6 +1,9 @@
+@import "./src/style/vars";
+
 .container {
   box-sizing: border-box;
   padding: 0 10px;
+  color: $primary-color;
 }
 
 .title {
@@ -9,15 +12,6 @@
   font-weight: bolder;
 }
 
-.cards {
-  display: grid;
-  grid-gap: 5px;
-}
-
-.playArea {
-  display: flex;
-  justify-content: center;
-}
 
 @media (min-width: 768px) {
   .container {

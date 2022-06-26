@@ -1,0 +1,37 @@
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.form {
+  * + * {
+    display: block;
+    margin-top: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  .input {
+    font-size: 20px;
+  }
+
+  .form {
+    * + * {
+      margin-top: 20px;
+    }
+  }
+}
