@@ -25,6 +25,12 @@ export const gameSlice = createSlice({
     setSize(state, { payload }: PayloadAction<number>) {
       state.size = payload;
     },
+    setStatus(state, { payload }: PayloadAction<Status>) {
+      state.status = payload;
+    },
+    setActive(state, { payload }: PayloadAction<string[]>) {
+      state.active = payload;
+    },
     addActiveCard(state, { payload }: PayloadAction<string>) {
       state.active.push(payload);
     },
@@ -71,5 +77,7 @@ export const {
   setOpenAll,
   process,
   setSize,
+  setStatus,
+  setActive,
 } = gameSlice.actions;
 export default gameSlice.reducer;
