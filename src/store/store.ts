@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import gameSlice from "./gameSlice";
 import authSlice from "./authSlice";
-import { locaStorageMiddleware } from "./middlewares/locaStorageMiddleware";
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "./saga/rootSaga";
 
 const getPreloadedState = () => {
   let state;
@@ -13,15 +14,18 @@ const getPreloadedState = () => {
   return state;
 };
 
+export const rootReducer = {
+  game: gameSlice,
+  auth: authSlice,
+};
+
+const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
-  reducer: {
-    game: gameSlice,
-    auth: authSlice,
-  },
+  reducer: rootReducer,
   preloadedState: getPreloadedState(),
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(locaStorageMiddleware),
+  middleware: [sagaMiddleware],
 });
+sagaMiddleware.run(rootSaga);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

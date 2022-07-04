@@ -4,8 +4,10 @@ import gameReducer, {
   GameState,
   process,
   replay,
+  setActive,
   setOpenAll,
   setSize,
+  setStatus,
   start,
 } from "./gameSlice";
 import { GameInfo } from "../types";
@@ -59,6 +61,17 @@ describe("gameReducer", () => {
   it("should set size", () => {
     const state = gameReducer(initState({} as InitState), setSize(3));
     expect(state.size).toBe(3);
+  });
+  it("should set status", () => {
+    const state = gameReducer(initState({} as InitState), setStatus("start"));
+    expect(state.status).toBe("start");
+  });
+  it("should set active", () => {
+    const state = gameReducer(
+      initState({} as InitState),
+      setActive(["01", "02"])
+    );
+    expect(state.active).toEqual(["01", "02"]);
   });
   it("should clear active,openAll cards,status 'replay' if replay", () => {
     const state = gameReducer(initState({} as InitState), replay());
