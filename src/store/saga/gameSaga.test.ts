@@ -1,7 +1,7 @@
 import { expectSaga } from "redux-saga-test-plan";
 import { delaySaga, startPlaySaga } from "./gameSaga";
 import { GAME_START } from "./actions/types";
-import { setActive, setOpenAll, setStatus } from "../gameSlice";
+import { setActive, setOpenAll, setStatus } from "../reducers/game/gameSlice";
 import { VIEW_TIMEOUT } from "../../helpers/const";
 
 describe("gameSagas", () => {

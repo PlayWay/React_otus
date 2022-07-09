@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GameInfo, Status } from "../types";
-import { play } from "../helpers/play";
+import { GameInfo, Status } from "../../../types";
+import { play } from "../../../helpers/play";
 
 export type GameState = {
   gameInfo: GameInfo;
@@ -10,7 +10,7 @@ export type GameState = {
   size: number;
 };
 
-const initialState: GameState = {
+export const gameInitialState: GameState = {
   active: [],
   gameInfo: {} as GameInfo,
   openAll: false,
@@ -20,7 +20,7 @@ const initialState: GameState = {
 
 export const gameSlice = createSlice({
   name: "game",
-  initialState,
+  initialState: gameInitialState,
   reducers: {
     setSize(state, { payload }: PayloadAction<number>) {
       state.size = payload;

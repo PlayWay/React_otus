@@ -1,7 +1,11 @@
 import { localStorageSaga } from "./localStorageSaga";
 import { expectSaga } from "redux-saga-test-plan";
 import { getLocalStorageState } from "../../helpers/helpers";
-import authSlice, { AuthState, login, logout } from "../authSlice";
+import authSlice, {
+  AuthState,
+  login,
+  logout,
+} from "../reducers/auth/authSlice";
 
 describe("localStorageSaga", () => {
   it("test persist LocalStorage", async () => {
@@ -17,7 +21,7 @@ describe("localStorageSaga", () => {
   it("test persist LocalStorage", async () => {
     await expectSaga(localStorageSaga)
       .withReducer(authSlice, {
-        user: "Igor",
+        user: { name: "Igor" },
       })
       .dispatch(logout())
       .silentRun();

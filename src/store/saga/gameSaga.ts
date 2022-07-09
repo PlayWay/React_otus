@@ -1,5 +1,5 @@
 import { call, delay, put, takeEvery } from "redux-saga/effects";
-import { setActive, setOpenAll, setStatus } from "../gameSlice";
+import { setActive, setOpenAll, setStatus } from "../reducers/game/gameSlice";
 import { VIEW_TIMEOUT } from "../../helpers/const";
 import { GAME_START } from "./actions/types";
 

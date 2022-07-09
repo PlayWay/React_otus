@@ -10,7 +10,7 @@ import gameReducer, {
   setStatus,
   start,
 } from "./gameSlice";
-import { GameInfo } from "../types";
+import { GameInfo } from "../../../types";
 
 type InitState = GameState;
 
