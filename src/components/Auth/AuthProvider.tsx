@@ -7,6 +7,7 @@ import React, {
 import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
 import { login } from "../../store/reducers/auth/authSlice";
 import { userNameSelector } from "../../store/reducers/auth/selector";
+import { LOGOUT_SAGA } from "../../store/saga/actions/types";
 
 export type AuthProviderType = {
   user: string;
@@ -23,7 +24,7 @@ export const AuthProvider: React.FC<PropsWithChildren<unknown>> = ({
   const user = useAppSelector(userNameSelector);
 
   const auth = useCallback((name: string) => dispatch(login(name)), [dispatch]);
-  const logout = useCallback(() => dispatch(login("")), [dispatch]);
+  const logout = useCallback(() => dispatch({ type: LOGOUT_SAGA }), [dispatch]);
 
   return (
     <AuthProviderContext.Provider value={{ user, logout, login: auth }}>

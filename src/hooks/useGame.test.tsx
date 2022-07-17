@@ -10,19 +10,18 @@ describe("useGame", () => {
   });
 
   it("should return object scheme", () => {
-    const { result } = renderHook(() => useGame(0));
-    const { gameInfo } = result.current;
+    const { result } = renderHook(() =>
+      useGame({
+        dispatch: jest.fn,
+        settings: { level: 1, complexity: "middle" },
+      })
+    );
     expect(result.current).toEqual({
-      control: {
-        endGame: expect.any(Function),
-        process: expect.any(Function),
-        replay: expect.any(Function),
-        reset: expect.any(Function),
-        start: expect.any(Function),
-      },
-      gameInfo: {},
-      status: "",
+      gameStart: expect.any(Function),
+      gameReplay: expect.any(Function),
+      nextLevel: expect.any(Function),
+      onChooseCard: expect.any(Function),
+      msg: "",
     });
-    expect(gameInfo).toEqual({});
   });
 });

@@ -1,59 +1,92 @@
-import { useCallback, useState } from "react";
-import { GameInfo, Status } from "../types";
+import { useCallback, useEffect, useState } from "react";
 import { play } from "../helpers/play";
+import { GAME_START_SAGA } from "../store/saga/actions/types";
+import {
+  addActiveCard,
+  endGame,
+  GameState,
+  levelUp,
+  updateStatistics,
+} from "../store/reducers/game/gameSlice";
+import { GameInfo, Settings } from "../types";
+import { AppDispatch } from "../store/store";
 
 export type GameHookType = {
-  control: {
-    reset: () => void;
-    start: (v?: number) => void;
-    endGame: () => void;
-    replay: () => void;
-    process: () => void;
-  };
-  gameInfo: GameInfo;
-  status: Status;
+  gameStart: () => void;
+  msg: string;
+  gameReplay: () => void;
+  nextLevel: () => void;
+  onChooseCard: (key: string) => void;
 };
 
-export const useGame = (size = 3) => {
-  const [gameInfo, setGameInfo] = useState<GameInfo>({} as GameInfo);
-  const [status, setStatus] = useState<Status>("" as Status);
+type GameHookP = {
+  winSeries?: GameInfo["winSeries"];
+  active?: GameState["active"];
+  status?: GameState["status"];
+  settings: Settings;
+  dispatch: AppDispatch;
+};
 
-  const reset = useCallback(() => {
-    setGameInfo({
-      filledArray: [],
-      winSeries: [],
-      searchColor: "red",
+export const useGame = ({
+  status = "reset",
+  active = [],
+  winSeries = [],
+  settings,
+  dispatch,
+}: GameHookP) => {
+  const [msg, setMsg] = useState("");
+
+  const gameStart = useCallback(() => {
+    if (!settings.level) {
+      return;
+    }
+    const game = play(settings.level, settings.complexity);
+    dispatch({
+      type: GAME_START_SAGA,
+      payload: { game, level: settings.level },
     });
-  }, []);
+  }, [dispatch, settings]);
 
-  const start = useCallback(() => {
-    const game = play(size);
-    setGameInfo(game);
-    setStatus("start");
-  }, [size]);
+  useEffect(() => {
+    if (
+      active.length &&
+      winSeries.length &&
+      active.length === winSeries.length
+    ) {
+      if (winSeries.every((v) => active.some((i) => i === v))) {
+        dispatch(updateStatistics("win"));
+        setMsg("Поздравляем! Вы выиграли!");
+      } else {
+        dispatch(updateStatistics("lose"));
+        setMsg("Проиграли :( Попробуйте, снова!");
+      }
+      dispatch(endGame());
+    }
+  }, [active, dispatch, winSeries]);
 
-  const endGame = useCallback(() => {
-    setStatus("end");
-  }, []);
-
-  const replay = useCallback(
-    (timeout = 1000) => {
-      setStatus("replay");
-      //Ждём отработку анимации
-      setTimeout(() => {
-        start();
-      }, timeout);
+  const onChooseCard = useCallback(
+    (key: string) => {
+      if (active.includes(key) || status === "start") {
+        return;
+      }
+      dispatch(addActiveCard(key));
     },
-    [size]
+    [active, status]
   );
 
-  const process = useCallback(() => {
-    setStatus("process");
-  }, []);
+  const gameReplay = () => {
+    gameStart();
+  };
+
+  const nextLevel = useCallback(() => {
+    dispatch(levelUp());
+  }, [dispatch]);
 
   return {
-    gameInfo,
-    control: { start, reset, process, endGame, replay },
-    status,
+    gameStart,
+    gameReplay,
+    nextLevel,
+    onChooseCard,
+    msg,
   };
 };

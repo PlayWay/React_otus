@@ -6,7 +6,7 @@ export type AuthState = {
   };
 };
 
-const initialState = {
+export const authInitialState = {
   user: {
     name: "",
   },
@@ -14,7 +14,7 @@ const initialState = {
 
 export const authSlice = createSlice({
   name: "auth",
-  initialState,
+  initialState: authInitialState,
   reducers: {
     login(state, { payload }: PayloadAction<string>) {
       state.user.name = payload;

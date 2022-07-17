@@ -1,7 +1,7 @@
 import { all } from "redux-saga/effects";
-import { localStorageSaga } from "./localStorageSaga";
-import { startPlaySaga } from "./gameSaga";
+import { startPlaySaga } from "./game/gameSaga";
+import { logoutSaga } from "./auth/authSaga";
 
 export default function* rootSaga() {
-  yield all([localStorageSaga(), startPlaySaga()]);
+  yield all([startPlaySaga(), logoutSaga()]);
 }

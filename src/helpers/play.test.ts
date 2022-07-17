@@ -15,10 +15,10 @@ describe("play func", () => {
   });
   it("check return prop filledArray scheme", () => {
     jest.spyOn(global.Math, "random").mockReturnValue(0.123456789);
-    const funcReturn = play(3);
+    const funcReturn = play(3, "low");
     expect(funcReturn.filledArray).toHaveLength(3);
     expect(funcReturn.filledArray[0]).toHaveLength(3);
-    expect(funcReturn.filledArray[0][2].color).toBe("orange");
+    expect(funcReturn.filledArray[0][2].color).toBe("red");
     expect(funcReturn.filledArray[0][2].id).toBe("02");
     const funcReturn2 = play(5);
     expect(funcReturn2.filledArray).toHaveLength(5);
@@ -32,7 +32,7 @@ describe("play func", () => {
       ["00", "01", "10", "11"].join(";")
     );
     expect(COLORS.includes(funcReturn.searchColor)).toBeTruthy();
-    expect(funcReturn.searchColor).toBe("orange");
+    expect(funcReturn.searchColor).toBe("red");
   });
   it("should diff filledArray if compare 2 calls", () => {
     const getColors = (arr: GridItem[][] = []) => {

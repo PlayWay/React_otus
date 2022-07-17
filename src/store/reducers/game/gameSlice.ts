@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GameInfo, Status } from "../../../types";
-import { play } from "../../../helpers/play";
+import { GameInfo, Settings, Statistic, Status } from "../../../types";
 
 export type GameState = {
   gameInfo: GameInfo;
   openAll: boolean;
   active: string[];
   status: Status;
-  size: number;
+  settings: Settings;
+  statistics: Statistic;
 };
 
 export const gameInitialState: GameState = {
@@ -15,21 +15,47 @@ export const gameInitialState: GameState = {
   gameInfo: {} as GameInfo,
   openAll: false,
   status: "reset",
-  size: 0,
+  settings: {
+    level: 0,
+    complexity: "low",
+  },
+  statistics: {
+    win: 0,
+    lose: 0,
+    try: 0,
+  },
 };
 
 export const gameSlice = createSlice({
   name: "game",
   initialState: gameInitialState,
   reducers: {
-    setSize(state, { payload }: PayloadAction<number>) {
-      state.size = payload;
+    setSettings(
+      state,
+      { payload }: PayloadAction<{ [K in keyof Settings]?: Settings[K] }>
+    ) {
+      state.settings = { ...state.settings, ...payload };
+    },
+    setGameInfo(state, { payload }: PayloadAction<GameInfo>) {
+      state.gameInfo = payload;
+    },
+    levelUp(state) {
+      state.settings.level = ++state.settings.level;
     },
     setStatus(state, { payload }: PayloadAction<Status>) {
       state.status = payload;
     },
-    setActive(state, { payload }: PayloadAction<string[]>) {
+    updateStatistics(
+      state,
+      { payload }: PayloadAction<"lose" | "win" | "try">
+    ) {
+      state.statistics[payload] = ++state.statistics[payload];
+    },
+    clearActive(state, { payload }: PayloadAction<string[]>) {
       state.active = payload;
+    },
+    resetState() {
+      return gameInitialState;
     },
     addActiveCard(state, { payload }: PayloadAction<string>) {
       state.active.push(payload);
@@ -44,7 +70,6 @@ export const gameSlice = createSlice({
       state.active = [];
     },
     start(state) {
-      state.gameInfo = play(state.size);
       state.status = "start";
       state.openAll = true;
       state.active = [];
@@ -73,11 +98,15 @@ export const {
   reset,
   replay,
   endGame,
+  levelUp,
   addActiveCard,
   setOpenAll,
+  setSettings,
   process,
-  setSize,
+  resetState,
+  setGameInfo,
   setStatus,
-  setActive,
+  updateStatistics,
+  clearActive,
 } = gameSlice.actions;
 export default gameSlice.reducer;

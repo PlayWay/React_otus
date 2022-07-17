@@ -1,17 +1,19 @@
-import { Colors, GridItem } from "../types";
+import { Colors, ComplexityType, GridItem } from "../types";
 import { COLORS } from "./const";
 
 type ColorsCount = Record<Colors, number>;
 
-export const play = (size = 0) => {
+export const play = (size = 0, complexity: ComplexityType = "low") => {
   // формируем игровую сетку
   const playArray: Omit<GridItem, "color">[][] = getPlayArray(size);
   //считаем количество каждого цвета
   const colorsCount: ColorsCount = {} as ColorsCount;
+  //определяем массив цветов
+  const colors = getColorForComplexity(COLORS, complexity);
   //насыщяем исходный массив рандомными цветами
   const filledArray: GridItem[][] = playArray.map((row) =>
     row.map((cols) => {
-      const color = fillColor();
+      const color = fillColor(colors);
       colorsCount[color] = color in colorsCount ? ++colorsCount[color] : 1;
       return { ...cols, color };
     })
@@ -41,8 +43,30 @@ const getPlayArray = (size = 3) => {
 /**
  * Рандомный цвет
  */
-const fillColor = () => {
-  return <Colors>COLORS[getRandomArbitrary(0, COLORS.length)];
+const fillColor = (colorsArr: Colors[]) => {
+  return <Colors>colorsArr[getRandomArbitrary(0, colorsArr.length)];
+};
+/**
+ * Возвращает массив цветов исходя из уровня сложности
+ * @param COLORS исходный массив цветов
+ * @param complexity сложность
+ */
+const getColorForComplexity = (
+  COLORS: Colors[] = [],
+  complexity: ComplexityType
+) => {
+  let colors;
+  switch (complexity) {
+    case "hard":
+      colors = getRandomArrayItems(COLORS, Math.floor(COLORS.length / 4));
+      break;
+    case "middle":
+      colors = getRandomArrayItems(COLORS, Math.ceil(COLORS.length / 2));
+      break;
+    default:
+      colors = COLORS;
+  }
+  return colors;
 };
 /**
  * Возвращает рандомное значение в диапазоне
@@ -68,4 +92,15 @@ const getSearchColor = (
     },
     {} as { color: Colors; count: number }
   );
+};
+/**
+ * Возвращает массив рандомных элементов
+ * @param items исходный массив
+ * @param amount количество элементов
+ */
+const getRandomArrayItems = (items: any[] = [], amount = 0) => {
+  return [...Array(items.length).keys()]
+    .sort(() => 0.5 - Math.random())
+    .slice(0, amount)
+    .map((index) => items[index]);
 };

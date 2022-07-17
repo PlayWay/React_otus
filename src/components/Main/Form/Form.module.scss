@@ -5,21 +5,23 @@
 .wrap {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin-bottom: 15px;
 }
 
-.x {
-  margin: 0 15px;
+.item {
+
+  & + .item {
+    margin-left: 15px;
+  }
+}
+
+.label {
+  margin-right: 5px;
+  display: inline-block;
 }
 
 .button {
-  margin-bottom: 15px;
-}
-
-.btnWrap {
-  display: flex;
-  justify-content: space-between;
+  margin-left: 5px;
 }
 
 .searchColor {
