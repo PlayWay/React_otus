@@ -1,0 +1,44 @@
+@import "../../style/vars";
+
+.button {
+  box-sizing: border-box;
+  padding: 10px 20px;
+  background-color: $primary;
+  color: $primary-inverse-color;
+  border: 1px solid $primary;
+  border-radius: 5px;
+
+  &:disabled {
+    background-color: #ffffff;
+    color: grey;
+    border-color: grey;
+    pointer-events: none;
+  }
+}
+
+.input {
+  padding: 5px;
+  border-radius: 5px;
+  border: 2px solid rgba($primary, 0.4);
+  transition: border-color .3s ease;
+
+  &:hover {
+    border-color: $primary-1;
+  }
+
+  &:focus {
+    border-color: $dark-primary-1;
+  }
+}
+
+@media (min-width: 768px) {
+  .button {
+    transition: .3s ease;
+    transition-property: background-color, color, border-color;
+
+    &:hover {
+      background-color: $primary-inverse-color;
+      color: $primary;
+    }
+  }
+}
