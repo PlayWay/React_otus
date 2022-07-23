@@ -6,6 +6,23 @@ import { AuthContainer } from "./AuthContainer";
 import { AuthProviderContext } from "./AuthProvider";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+jest.mock("next/router", () => ({
+  useRouter() {
+    return {
+      route: "/",
+      pathname: "",
+      query: "",
+      asPath: "",
+      push: jest.fn(),
+      events: {
+        on: jest.fn(),
+        off: jest.fn(),
+      },
+      beforePopState: jest.fn(() => null),
+      prefetch: jest.fn(() => null),
+    };
+  },
+}));
 const renderContainer = (login = () => ({})) => {
   render(
     <BrowserRouter>

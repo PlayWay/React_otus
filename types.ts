@@ -1,4 +1,3 @@
-import { Location } from "react-router-dom";
 import { COLORS } from "./helpers/const";
 
 export type UnionOfArrayElements<ARR_T extends Readonly<unknown[]>> =
@@ -14,10 +13,6 @@ export type GameInfo = {
 };
 
 export type Status = "start" | "reset" | "end" | "process" | "replay";
-
-export type NavigationState = {
-  from?: Location;
-};
 
 export type ComplexityType = "low" | "middle" | "hard";
 

@@ -9,10 +9,11 @@ describe("useGame", () => {
     jest.resetAllMocks();
   });
 
-  it("should return object scheme", () => {
+  it("should return object scheme", async () => {
+    const mockedDispatch = jest.fn();
     const { result } = renderHook(() =>
       useGame({
-        dispatch: jest.fn,
+        dispatch: mockedDispatch,
         settings: { level: 1, complexity: "middle" },
       })
     );
@@ -23,5 +24,9 @@ describe("useGame", () => {
       onChooseCard: expect.any(Function),
       msg: "",
     });
+    // await act(() => {
+    //   result.current.onChooseCard("1");
+    // });
+    // expect(mockedDispatch).toHaveBeenCalledWith(addActiveCard("1"));
   });
 });

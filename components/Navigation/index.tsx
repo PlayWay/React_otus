@@ -1,10 +1,10 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import AuthPage from "../../pages/AuthPage";
-import MainPage from "../../pages/MainPage";
 import AuthProvider from "../Auth/AuthProvider";
 import ProtectedRoute from "./ProtectedRoute";
 import HeaderWrap from "../HeaderWrap";
+import MainPage from "../../pages";
+import AuthPage from "../../pages/auth";
 
 const mainElement = (
   <HeaderWrap>
