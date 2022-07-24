@@ -32,7 +32,7 @@ export const play = (size = 0, complexity: ComplexityType = "low") => {
  * Генерирует массив игры(сетку)
  * @param size
  */
-const getPlayArray = (size = 3) => {
+export const getPlayArray = (size = 3) => {
   return Array.from({ length: size }).map((_, rowIndex) => [
     ...Array.from({ length: size }).map((_, colIndex) => ({
       id: `${rowIndex}${colIndex}`,
@@ -43,7 +43,7 @@ const getPlayArray = (size = 3) => {
 /**
  * Рандомный цвет
  */
-const fillColor = (colorsArr: Colors[]) => {
+export const fillColor = (colorsArr: Colors[]) => {
   return <Colors>colorsArr[getRandomArbitrary(0, colorsArr.length)];
 };
 /**
@@ -51,14 +51,17 @@ const fillColor = (colorsArr: Colors[]) => {
  * @param COLORS исходный массив цветов
  * @param complexity сложность
  */
-const getColorForComplexity = (
+export const getColorForComplexity = (
   COLORS: Colors[] = [],
   complexity: ComplexityType
 ) => {
   let colors;
   switch (complexity) {
     case "hard":
-      colors = getRandomArrayItems(COLORS, Math.floor(COLORS.length / 4));
+      colors = getRandomArrayItems(
+        COLORS,
+        Math.floor(COLORS.length / 4) <= 1 ? 2 : Math.floor(COLORS.length / 4)
+      );
       break;
     case "middle":
       colors = getRandomArrayItems(COLORS, Math.ceil(COLORS.length / 2));
@@ -73,11 +76,11 @@ const getColorForComplexity = (
  * @param min
  * @param max
  */
-const getRandomArbitrary = (min: number, max: number) => {
+export const getRandomArbitrary = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-const getSearchColor = (
+export const getSearchColor = (
   colorsCount: ColorsCount
 ): { color: Colors; count: number } => {
   const arr = Object.keys(colorsCount) as Colors[];
@@ -98,7 +101,7 @@ const getSearchColor = (
  * @param items исходный массив
  * @param amount количество элементов
  */
-const getRandomArrayItems = (items: any[] = [], amount = 0) => {
+export const getRandomArrayItems = (items: any[] = [], amount = 0) => {
   return [...Array(items.length).keys()]
     .sort(() => 0.5 - Math.random())
     .slice(0, amount)

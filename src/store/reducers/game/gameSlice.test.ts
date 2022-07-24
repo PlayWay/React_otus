@@ -71,6 +71,10 @@ describe("gameReducer", () => {
     const state = gameReducer(initState({} as InitState), setStatus("start"));
     expect(state.status).toBe("start");
   });
+  it("should set status", () => {
+    const state = gameReducer(initState({} as InitState), setStatus("start"));
+    expect(state.status).toBe("start");
+  });
   it("should clear active", () => {
     const state = gameReducer(
       initState({
@@ -93,3 +97,17 @@ describe("gameReducer", () => {
     expect(state.status).toBe("end");
   });
 });
+
+// {
+//     endGame,
+//     levelUp,
+//     addActiveCard,
+//     setOpenAll,
+//     setSettings,
+//     process,
+//     resetState,
+//     setGameInfo,
+//     setStatus,
+//     updateStatistics,
+//     clearActive,
+// }

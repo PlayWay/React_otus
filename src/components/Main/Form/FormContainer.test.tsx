@@ -6,17 +6,19 @@ import { FormContainer } from "./FormContainer";
 import { initState, renderWithRedux } from "../../../test/helpers";
 import { Status } from "../../../types";
 import { GameState } from "../../../store/reducers/game/gameSlice";
+import { RootState } from "../../../store/store";
 
 const levelTestId = "level-input";
 const complexityTestId = "complexity-input";
 
 const renderContainer = (status?: Status) => {
-  renderWithRedux(<FormContainer />, {
+  const init = {
     ...initState,
     game: {
       ...({ ...initState.game, status: status || "start" } as GameState),
     },
-  });
+  } as RootState;
+  renderWithRedux(<FormContainer />, init);
 };
 
 describe("FormContainer", () => {

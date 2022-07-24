@@ -61,11 +61,7 @@ export const gameSlice = createSlice({
       state.active.push(payload);
     },
     reset(state) {
-      state.gameInfo = {
-        filledArray: [],
-        winSeries: [],
-        searchColor: "red",
-      };
+      state.gameInfo = {} as GameInfo;
       state.openAll = false;
       state.active = [];
     },
