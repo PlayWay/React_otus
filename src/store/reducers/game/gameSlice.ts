@@ -12,7 +12,11 @@ export type GameState = {
 
 export const gameInitialState: GameState = {
   active: [],
-  gameInfo: {} as GameInfo,
+  gameInfo: {
+    searchColor: "black",
+    winSeries: [],
+    filledArray: [],
+  },
   openAll: false,
   status: "reset",
   settings: {

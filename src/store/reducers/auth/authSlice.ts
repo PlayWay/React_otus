@@ -10,7 +10,7 @@ export const authInitialState = {
   user: {
     name: "",
   },
-} as AuthState;
+};
 
 export const authSlice = createSlice({
   name: "auth",

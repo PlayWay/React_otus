@@ -7,7 +7,7 @@ export const play = (size = 0, complexity: ComplexityType = "low") => {
   // формируем игровую сетку
   const playArray: Omit<GridItem, "color">[][] = getPlayArray(size);
   //считаем количество каждого цвета
-  const colorsCount: ColorsCount = {} as ColorsCount;
+  const colorsCount: ColorsCount = {};
   //определяем массив цветов
   const colors = getColorForComplexity(COLORS, complexity);
   //насыщяем исходный массив рандомными цветами
