@@ -2,50 +2,50 @@ import React, {
   ChangeEvent,
   memo,
   useCallback,
-  useContext,
   useEffect,
-  useState,
+  useMemo,
 } from "react";
 import Form from "./Form";
-import { AreaSizeContext, GameContext } from "../MainContainer";
-import { GRID_LIMIT } from "../../../helpers/const";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useAppDispatch";
+import {
+  gameStatusSelector,
+  settingsSelector,
+} from "../../../store/reducers/game/selectors";
+import { useInput } from "../../../hooks/useInput";
+import { setSettings } from "../../../store/reducers/game/gameSlice";
 
 export const FormContainer: React.FC = ({}) => {
-  const { setSize, size } = useContext(AreaSizeContext);
-  const { gameInfo, status } = useContext(GameContext);
-  const [value, setValue] = useState<number>(3);
+  const settings = useAppSelector(settingsSelector);
+  const dispatch = useAppDispatch();
+  const status = useAppSelector(gameStatusSelector);
+  const level = useInput<HTMLSelectElement>(settings.level);
+  const complexity = useInput<HTMLSelectElement>(settings.complexity);
 
   useEffect(() => {
-    setValue(size);
-  }, [size]);
-
-  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    const numVal: number = +val;
-
-    if (isNaN(numVal) || numVal > GRID_LIMIT) {
-      return;
-    }
-    setValue(numVal || 0);
-  }, []);
+    level.onChange({ target: { value: settings.level } });
+  }, [settings]);
 
   const onSubmit = useCallback(
     async (e: ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
-      setSize(value);
+      dispatch(
+        setSettings({
+          level: level.value,
+          complexity: complexity.value,
+        })
+      );
     },
-    [setSize, value]
+    [complexity.value, dispatch, level.value]
   );
 
-  return (
-    <Form
-      onSumbit={onSubmit}
-      value={value}
-      onChange={onChange}
-      disabled={status === "start"}
-      color={gameInfo.searchColor}
-    />
-  );
+  const form = useMemo(() => {
+    return {
+      level,
+      complexity,
+    };
+  }, [complexity, level]);
+
+  return <Form onSubmit={onSubmit} form={form} disabled={status === "start"} />;
 };
 
 export default memo(FormContainer);

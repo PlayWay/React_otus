@@ -1,8 +1,9 @@
 import React, { FC, useContext } from "react";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import { AuthProvider, AuthProviderContext } from "./AuthProvider";
 import userEvent from "@testing-library/user-event";
-import { LOCAL_STORAGE_KEYS } from "../../helpers/const";
+import { initState, renderWithRedux } from "../../test/helpers";
+import { RootState } from "../../store/store";
 
 const { getByTestId } = screen;
 describe("AuthProvider", () => {
@@ -33,36 +34,43 @@ describe("AuthProvider", () => {
     jest.resetAllMocks();
   });
 
-  const renderContainer = () =>
-    render(
+  const renderContainer = (name = "") => {
+    renderWithRedux(
       <AuthProvider>
         <FakeComponent />
-      </AuthProvider>
+      </AuthProvider>,
+      {
+        ...initState,
+        auth: {
+          user: {
+            name,
+          },
+        },
+      } as RootState
     );
+  };
 
   test("initial render and no userName in local storage, then userName is null", () => {
     renderContainer();
     expect(getByTestId(userTestId).textContent).toBe("");
   });
 
-  test("userName correctly loads from local storage", () => {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.user, userName);
-    renderContainer();
+  test("userName correctly loads", () => {
+    renderContainer(userName);
     expect(getByTestId(userTestId).textContent).toBe(userName);
   });
 
-  test("login, then user name is correct and saved to local storage", async () => {
+  test("login, then user name is correct", async () => {
     renderContainer();
     await userEvent.click(getByTestId(loginTestId));
     expect(getByTestId(userTestId).textContent).toBe(userName);
-    expect(localStorage.getItem(LOCAL_STORAGE_KEYS.user)).toBe(userName);
   });
 
-  test("login and logout, then user name is null and local storage is cleared", async () => {
-    renderContainer();
-    await userEvent.click(getByTestId(loginTestId));
-    await userEvent.click(getByTestId(logoutTestId));
-    expect(getByTestId(userTestId).textContent).toBe("");
-    expect(localStorage.getItem(LOCAL_STORAGE_KEYS.user)).toBeNull();
-  });
+  // test("login and logout, then user name is null", async () => {
+  //   const dispatch = jest.fn();
+  //   renderContainer();
+  //   await userEvent.click(getByTestId(loginTestId));
+  //   await userEvent.click(getByTestId(logoutTestId));
+  //   expect(dispatch).toHaveBeenCalledWith({ type: LOGOUT_SAGA });
+  // });
 });

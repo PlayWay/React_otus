@@ -3,10 +3,11 @@ import React, {
   memo,
   PropsWithChildren,
   useCallback,
-  useEffect,
-  useState,
 } from "react";
-import { LOCAL_STORAGE_KEYS } from "../../helpers/const";
+import { useAppDispatch, useAppSelector } from "../../hooks/useAppDispatch";
+import { login } from "../../store/reducers/auth/authSlice";
+import { userNameSelector } from "../../store/reducers/auth/selector";
+import { LOGOUT_SAGA } from "../../store/saga/actions/types";
 
 export type AuthProviderType = {
   user: string;
@@ -19,21 +20,14 @@ export const AuthProviderContext = createContext<AuthProviderType>(
 export const AuthProvider: React.FC<PropsWithChildren<unknown>> = ({
   children,
 }) => {
-  const [user, setUser] = useState<string>(localStorage.getItem("user") || "");
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(userNameSelector);
 
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem(LOCAL_STORAGE_KEYS.user, user);
-    } else {
-      localStorage.removeItem(LOCAL_STORAGE_KEYS.user);
-    }
-  }, [user]);
-
-  const login = useCallback((name: string) => setUser(name), []);
-  const logout = useCallback(() => setUser(""), []);
+  const auth = useCallback((name: string) => dispatch(login(name)), [dispatch]);
+  const logout = useCallback(() => dispatch({ type: LOGOUT_SAGA }), [dispatch]);
 
   return (
-    <AuthProviderContext.Provider value={{ user, logout, login }}>
+    <AuthProviderContext.Provider value={{ user, logout, login: auth }}>
       {children}
     </AuthProviderContext.Provider>
   );

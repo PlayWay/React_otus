@@ -1,59 +1,71 @@
 import React, { ChangeEvent, memo } from "react";
 import Button from "../../ui/Button";
 import s from "./Form.module.scss";
-import ui from "../../ui/ui.module.scss";
-import { GameInfo } from "../../../types";
-import clsx from "clsx";
+import { GRID_LIMIT } from "../../../helpers/const";
 
-interface FormProps {
-  onSumbit: (e: ChangeEvent<HTMLFormElement>) => void;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  value: number;
+type Field<T> = {
+  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+  value: T;
+};
+
+export interface FormProps {
+  onSubmit: (e: ChangeEvent<HTMLFormElement>) => void;
+  form: {
+    level: Field<number>;
+    complexity: Field<string>;
+  };
   disabled: boolean;
-  color: GameInfo["searchColor"];
 }
 
-export const Form: React.FC<FormProps> = ({
-  onSumbit,
-  value,
-  disabled,
-  onChange,
-  color,
-}) => {
+export const Form: React.FC<FormProps> = ({ onSubmit, disabled, form }) => {
   return (
-    <form onSubmit={onSumbit} data-testid="form">
+    <form onSubmit={onSubmit} data-testid="form">
       <div className={s.wrap}>
-        <input
-          value={value}
-          className={clsx(s.input, ui.input)}
-          name="x"
-          onChange={onChange}
-          data-testid="input-x"
-        />
-        <span className={s.x}>X</span>
-        <input
-          value={value}
-          className={clsx(s.input, ui.input)}
-          name="y"
-          onChange={onChange}
-          data-testid="input-y"
-        />
-      </div>
-      <div className={s.btnWrap}>
-        <Button
-          type="submit"
-          disabled={disabled}
-          className={s.button}
-          data-testid="play-btn"
-        >
-          Начать игру
-        </Button>
-        <div className={s.searchColor} data-testid="color-box">
-          <h2>Цвет:</h2>
-          <div
-            data-testid="color-box-container"
-            style={{ backgroundColor: color, width: 40, height: 40 }}
-          />
+        <div className={s.item}>
+          <label htmlFor="level" className={s.label}>
+            Уровень:
+          </label>
+          <select
+            name="level"
+            id="level"
+            data-testid="level-input"
+            onChange={form.level.onChange}
+            value={form.level.value}
+            required
+          >
+            <option value="" />
+            {Array.from({ length: GRID_LIMIT }).map((_, i) => (
+              <option value={i + 2} key={i}>
+                {i + 1}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className={s.item}>
+          <label htmlFor="complexity" className={s.label}>
+            Сложность:
+          </label>
+          <select
+            name="complexity"
+            id="complexity"
+            data-testid="complexity-input"
+            onChange={form.complexity.onChange}
+            value={form.complexity.value}
+          >
+            <option value="low">Лёгкий</option>
+            <option value="middle">Средний</option>
+            <option value="hard">Сложный</option>
+          </select>
+        </div>
+        <div className={s.item}>
+          <Button
+            type="submit"
+            disabled={disabled}
+            className={s.button}
+            data-testid="play-btn"
+          >
+            Начать игру
+          </Button>
         </div>
       </div>
     </form>

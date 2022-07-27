@@ -6,6 +6,7 @@ export const ProtectedRoute: React.FC<PropsWithChildren<any>> = ({
   children,
 }) => {
   const { user } = useContext(AuthProviderContext);
+
   const location = useLocation();
   if (user) {
     return children;

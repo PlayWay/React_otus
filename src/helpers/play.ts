@@ -1,17 +1,19 @@
-import { Colors, GridItem } from "../types";
+import { Colors, ComplexityType, GridItem } from "../types";
 import { COLORS } from "./const";
 
 type ColorsCount = Record<Colors, number>;
 
-export const play = (size = 0) => {
+export const play = (size = 0, complexity: ComplexityType = "low") => {
   // формируем игровую сетку
   const playArray: Omit<GridItem, "color">[][] = getPlayArray(size);
   //считаем количество каждого цвета
-  const colorsCount: ColorsCount = {} as ColorsCount;
+  const colorsCount: ColorsCount = {};
+  //определяем массив цветов
+  const colors = getColorForComplexity(COLORS, complexity);
   //насыщяем исходный массив рандомными цветами
   const filledArray: GridItem[][] = playArray.map((row) =>
     row.map((cols) => {
-      const color = fillColor();
+      const color = fillColor(colors);
       colorsCount[color] = color in colorsCount ? ++colorsCount[color] : 1;
       return { ...cols, color };
     })
@@ -30,7 +32,7 @@ export const play = (size = 0) => {
  * Генерирует массив игры(сетку)
  * @param size
  */
-const getPlayArray = (size = 3) => {
+export const getPlayArray = (size = 3) => {
   return Array.from({ length: size }).map((_, rowIndex) => [
     ...Array.from({ length: size }).map((_, colIndex) => ({
       id: `${rowIndex}${colIndex}`,
@@ -41,19 +43,44 @@ const getPlayArray = (size = 3) => {
 /**
  * Рандомный цвет
  */
-const fillColor = () => {
-  return <Colors>COLORS[getRandomArbitrary(0, COLORS.length)];
+export const fillColor = (colorsArr: Colors[]) => {
+  return <Colors>colorsArr[getRandomArbitrary(0, colorsArr.length)];
+};
+/**
+ * Возвращает массив цветов исходя из уровня сложности
+ * @param COLORS исходный массив цветов
+ * @param complexity сложность
+ */
+export const getColorForComplexity = (
+  COLORS: Colors[] = [],
+  complexity: ComplexityType
+) => {
+  let colors;
+  switch (complexity) {
+    case "hard":
+      colors = getRandomArrayItems(
+        COLORS,
+        Math.floor(COLORS.length / 4) <= 1 ? 2 : Math.floor(COLORS.length / 4)
+      );
+      break;
+    case "middle":
+      colors = getRandomArrayItems(COLORS, Math.ceil(COLORS.length / 2));
+      break;
+    default:
+      colors = COLORS;
+  }
+  return colors;
 };
 /**
  * Возвращает рандомное значение в диапазоне
  * @param min
  * @param max
  */
-const getRandomArbitrary = (min: number, max: number) => {
+export const getRandomArbitrary = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-const getSearchColor = (
+export const getSearchColor = (
   colorsCount: ColorsCount
 ): { color: Colors; count: number } => {
   const arr = Object.keys(colorsCount) as Colors[];
@@ -68,4 +95,15 @@ const getSearchColor = (
     },
     {} as { color: Colors; count: number }
   );
+};
+/**
+ * Возвращает массив рандомных элементов
+ * @param items исходный массив
+ * @param amount количество элементов
+ */
+export const getRandomArrayItems = (items: any[] = [], amount = 0) => {
+  return [...Array(items.length).keys()]
+    .sort(() => 0.5 - Math.random())
+    .slice(0, amount)
+    .map((index) => items[index]);
 };
