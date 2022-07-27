@@ -4,8 +4,7 @@ const config = {
   "testRunner": "jest",
   "mutate": [
     "src/**/*.ts?(x)",
-    "!src/**/?(*.)+(spec|test|stories).ts?(x)",
-    "!src/Navigation/*.ts?(x)"
+    "!src/**/?(*.)+(spec|test|stories).ts?(x)"
   ],
   "tsconfigFile": "tsconfig.json"
 };
